@@ -1,0 +1,14 @@
+---
+- name: assignment permission wheel group
+  lineinfile: "dest=/etc/sudoers state=present backrefs=yes regexp='^# %wheel' line='%wheel ALL=(ALL) NOPASSWD: ALL'"
+  when: wheel_group_enabled == True
+
+- name: assignment user permission
+  template:
+    src: sudoers.j2
+    dest: /etc/sudoers.d/{{ item.name }}
+    mode: 0600
+    owner: root
+    group: root
+    validate: /usr/sbin/visudo -cf %s
+  with_items: "{{ sudoers }}"
