@@ -37,7 +37,7 @@ Example Playbook
 - hosts: all
   become: true
   roles:
-    - role: sudoers
+    - role: galaxy-sudoers
       wheel_group_enabled: True
       sudoers:
         - { name: foo, line: "%hoge ALL=(ALL) NOPASSWD: ALL" }
